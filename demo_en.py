@@ -59,7 +59,7 @@ if 'search' in text:
     query = text[pos+len('search'):].strip()
 
     #mở link đầu tiên trên trình duyệt
-    url = next(search(query, tld='com', lang='vi', num=1, start=0, stop=None, pause=2))
+    url = next(search(query, tld='com', lang='en', num=1, start=0, stop=None, pause=2))
     # print(url)
     webbrowser.open(url, autoraise=False)
     end_speech = 'search for ' + query
@@ -75,8 +75,9 @@ if 'play' in text:
         webbrowser.open(DEFAULT_MUSIC, autoraise=False)    
         speak('play music', 'music.mp3')
     else:
-        if len(YoutubeSearch(query, max_results=1).to_dict()) > 0:
-            results = YoutubeSearch(query, max_results=1).to_dict()[0]
+        ytsearch = YoutubeSearch(query, max_results=1).to_dict()
+        if len(ytsearch) > 0:
+            results = ytsearch[0]
             url = 'youtube.com' + results.get('link')
             print(url)
             webbrowser.open(url, autoraise=False)    #autoraise=false không hoạt động ở windows
