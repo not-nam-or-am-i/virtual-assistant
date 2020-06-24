@@ -12,7 +12,7 @@ Xin chào/ tạm biệt. (Quang Anh)
 
 -Tìm kiếm … 		nam
 
--Mở máy ảnh (Quang Anh) (chư
+-Mở máy ảnh (Quang Anh) (chưa có )
 
 List of questions:
 -Thời tiết hôm nay thế nào ? (Quang Anh)
@@ -21,6 +21,11 @@ List of questions:
 
 -Nếu ngủ bây giờ thì tôi nên thức dậy vào mấy giờ ? (Quang Anh)
 
-bây giờ là mấy giờ ? Hôm nay thứ mấy, ngày / tháng/ năm
-tôi đang ở đâu.
+- Bây giờ là mấy giờ ? Hằng
+
+
+ - Hôm nay thứ mấy, ngày / tháng/ năm Hằng 
+ 
+ 
+ - tôi đang ở đâu. Hằng
 
