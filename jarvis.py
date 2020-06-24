@@ -1,8 +1,7 @@
 from tkinter import *
-# from pydub import AudioSegment
-# from pydub.playback import play
+#from pydub import AudioSegment
+#from pydub.playback import play
 from gtts import gTTS
-import datetime
 import speech_recognition as sr
 import webbrowser
 import os
@@ -13,6 +12,8 @@ import json
 import playsound
 from googlesearch import search
 from youtube_search import YoutubeSearch
+import subprocess
+from datetime import datetime, timedelta
 
 DEFAULT_MUSIC = 'https://www.youtube.com/watch?v=3jWRrafhO7M'
 
@@ -31,8 +32,8 @@ def speak(text, filename='voice.mp3'):
     tts = gTTS(text=text, lang='vi')
     tts.save(filename)
     playsound.playsound(filename)
-    # sound = AudioSegment.from_mp3(filename)
-    # play(sound)
+    #sound = AudioSegment.from_mp3(filename)
+    #play(sound)
     
 def takeCommand():
     r = sr.Recognizer()
@@ -133,6 +134,13 @@ def get_weather():
     content = f"Thời tiết {city} {descr}. Nhiệt độ {temp} độ. Độ ẩm {humid} phần trăm."
     return content
 
+def get_wakeup_time():
+    current_time = datetime.now()
+    #14 minutes to fall asleep and 5-6 cycles for good sleep
+    #each cycle typically last 90 minutes    
+    time1 = current_time + timedelta(minutes=14+90*5)
+    time2 = current_time + timedelta(microsoft=14+90*6)
+    return (time1, time2)    
 ###    
 def _play():    
     btn2['state'] = 'disabled'    
@@ -154,8 +162,17 @@ def _play():
         weather_description = get_weather()
         var.set(weather_description)    
         window.update()        
-        speak(weather_description, 'weather.mp3')
-
+        speak(weather_description, 'weather.mp3')        
+    elif 'máy ảnh' in text:
+        var.set("Bật máy ảnh")
+        window.update()        
+        subprocess.run('start microsoft.windows.camera:', shell=True)
+    elif 'thức dậy' in text:
+        best_time = get_wakeup_time()
+        var.set(f"{best_time[0].hour}:{best_time[0].minute} hoặc {best_time[1].hour}:{best_time[1].minute}")
+        window.update()
+        speak(f"Bạn nên dậy vào {best_time[0].hour} giờ {best_time[0].minute} phút hoặc {best_time[1].hour} giờ {best_time[1].minute} phút")          
+        
         #open browser
     elif 'mở trình duyệt' in text:
         url='google.com'
@@ -204,13 +221,16 @@ def _play():
             else:
                 var.set('Jarvis không tìm thấy bài ' + query)
                 window.update()
-                speak('Jarvis không tìm thấy bài ' + query, 'sorry.mp3')
-
+                speak('Jarvis không tìm thấy bài ' + query, 'sorry.mp3')        
     else:
         var.set('Jarvis không hiểu bạn')
         window.update()
-        speak('Javis không hiểu bạn nói gì')
-        
+        speak('Javis không hiểu bạn nói gì', "not_understand.mp3")    
+
+#Press space
+def key(event):    
+    if (repr(event.char)=="' '"):
+        _play()
 
 if __name__ == '__main__':
     label2 = Label(window, textvariable = var1, bg = '#FAB60C')
@@ -236,7 +256,8 @@ if __name__ == '__main__':
     btn2 = Button(text = 'Kết thúc',width = 20, command = window.destroy, bg = '#5C85FB')
     btn2.config(font=("Courier", 12))
     btn2.pack()
-    window.after(600, speak, 'hãy ấn bắt đầu để khởi động trợ lý ảo', 'greeting0.mp3')
+    window.bind("<Key>", key)
+    window.after(600, speak, 'hãy ấn bắt đầu hoặc nhấn phím cách để khởi động trợ lý ảo', 'greeting0.mp3')
     window.mainloop()
     # speak('hãy ấn bắt đầu để khởi động trợ lý ảo', 'greeting0.mp3')
     
