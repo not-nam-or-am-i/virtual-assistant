@@ -13,6 +13,7 @@ import json
 import playsound
 from googlesearch import search
 from youtube_search import YoutubeSearch
+import time
 
 DEFAULT_MUSIC = 'https://www.youtube.com/watch?v=3jWRrafhO7M'
 
@@ -27,13 +28,13 @@ global var1
 var = StringVar()
 var1 = StringVar()
 
-def speak(text, filename='voice.mp3'):
+def speak(text):
     tts = gTTS(text=text, lang='vi')
-    tts.save(filename)
-    playsound.playsound(filename)
-    # sound = AudioSegment.from_mp3(filename)
-    # play(sound)
-    
+    tts.save("dtth.mp3")
+    playsound.playsound("dtth.mp3")
+    # os.remove(filename)
+
+
 def takeCommand():
     r = sr.Recognizer()
     query=""
@@ -41,14 +42,16 @@ def takeCommand():
         var.set("Đang nghe...")
         window.update()
         print("Listening...")        
-        audio = r.listen(source)
+        audio = r.adjust_for_ambient_noise(source, duration=0.5) # listen for 1 second to calibrate the energy threshold for ambient noise levels
+        audio = r.listen(source, timeout=5, phrase_time_limit=10)
+        
         try:
             var.set("Đang nhận diện...")
             window.update()
-            print("Recognizing")
+            print("Đang nhận diện...")
             query = r.recognize_google(audio, language='vi-VN')
         except Exception as e:
-            print('zxcvzxcv')
+            print('exception52')
             return "None"
     var1.set(query)
     window.update()
@@ -88,9 +91,9 @@ def hello():
     global ind
     ind = 77
     if(user_name==""):                
-        speak("xin chào người dùng. Jarvis vẫn chưa biết tên của bạn. Bạn muốn được gọi là gì ?", 'greeting1.mp3')       
+        speak("xin chào người dùng. Mai Thúy vẫn chưa biết tên của bạn. Bạn muốn được gọi là gì ?")       
     else:
-        speak(f"xin chào {user_name}. Jarvis có thể giúp gì cho bạn.", 'greeting2.mp3')        
+        speak(f"xin chào {user_name}. Mai Thúy có thể giúp gì cho bạn.")        
     
 def show_name(name):
     global user_name
@@ -109,7 +112,7 @@ def goodbye():
     window.update()
     global ind
     ind = 77
-    speak(f"tạm biệt {user_name}", 'bye.mp3')
+    speak(f"tạm biệt {user_name}")
 
 def get_weather():
     # Enter your API key here 
@@ -133,20 +136,99 @@ def get_weather():
     content = f"Thời tiết {city} {descr}. Nhiệt độ {temp} độ. Độ ẩm {humid} phần trăm."
     return content
 
+###
+
+
+def get_time(ques: str):
+    list_ques = ["mấy giờ", "thời gian"] 
+    flag = 0
+    for i in list_ques:
+        if i in ques:
+            flag = 1
+    if flag == 1 :        
+        seconds = time.time()
+        # local_time = time.ctime(seconds)
+        res = time.localtime(seconds)
+        hour = res.tm_hour
+        # year = res.tm_year
+        minute = res.tm_min
+        ans = "Hiện tại là, " + str(hour) + " giờ," + str(minute) + " phút"
+        var.set(ans)
+        speak(ans )
+        print(ans)
+        return True
+    return False
+    
+
+def get_location(ques: str) : # answer user's location , city, country, longtitude, latitude.
+    list_ques = ["ở đâu", "chỗ nào", "vị trí"] 
+    flag = 0
+    for i in list_ques:
+        if i in ques:
+            flag = 1
+    if flag == 1 :
+        send_url = "http://api.ipstack.com/check?access_key=e7c7c4dd6664f61df983df6ac60d4265"
+        geo_req = requests.get(send_url)
+        geo_json = json.loads(geo_req.text)
+        lat = geo_json['latitude']
+        
+        longi = geo_json['longitude']
+        country = geo_json['country_name']
+        cit = geo_json['city']
+        if cit.lower() == "hanoi":
+            cit = " Hà Nội "
+        location_ = "bạn đang ở thành phố: " + cit + ". Quốc gia: " + country 
+        var.set(location_)
+        speak(location_)
+        print(location_)
+        return True
+    return False
+
+def get_day(ques: str):
+    list_ques = ["thứ mấy", "ngày bao nhiêu", "ngày nào"] 
+    flag = 0
+    for i in list_ques:
+        if i in ques:
+            flag = 1
+    if flag == 1 :        
+        dt = datetime.datetime.today()
+        year = dt.year
+        month = dt.month
+        day = dt.day
+        weekday = dt.weekday()
+        weekday += 2
+        if weekday == 8 :
+            weekday = "chủ nhật"
+        else :
+            weekday = "thứ " + str(weekday)
+        ans = "Hôm nay là " + str(weekday) + ", ngày " + str(day) + " , tháng : " + str(month)
+        var.set(ans)
+        speak(ans )
+        print(ans)           
+        return True
+    return False 
+
+
 ###    
 def _play():    
     btn2['state'] = 'disabled'    
     btn1.configure(bg = 'orange')         
           
-        # btn1.configure(bg = 'orange')
     text = takeCommand().lower()
+    print("text: ", text)
+
     if 'kết thúc' in text:
         goodbye()
         window.destroy()
         # break    
+    elif get_location(text):
+        pass
+    elif get_day(text):
+        pass
+    elif get_time(text):
+        pass
     elif 'xin chào' in text:
         hello()
-
     elif 'gọi tôi là' in text:
         id_end = text.find("gọi tôi là") + len("gọi tôi là ")
         show_name(text[id_end:])
@@ -154,15 +236,15 @@ def _play():
         weather_description = get_weather()
         var.set(weather_description)    
         window.update()        
-        speak(weather_description, 'weather.mp3')
+        speak(weather_description)
 
         #open browser
     elif 'mở trình duyệt' in text:
-        url='google.com'
-        webbrowser.open(url, autoraise=False)
+        url='https://google.com'
+        webbrowser.get("google-chrome").open(url)
         var.set('mở trình duyệt')
         window.update()
-        speak('mở trình duyệt', 'browser.mp3')
+        speak('mở trình duyệt')
 
     #search: mở link đầu tiên trên tab mới
     elif 'tìm' in text:
@@ -171,13 +253,14 @@ def _play():
         query = text[pos+len('tìm'):].strip()
 
         #mở link đầu tiên trên trình duyệt
+        print("question: ", query)
         url = next(search(query, tld='com', lang='en', num=1, domains= ['com', 'org', 'vn'], start=0, stop=None, pause=2))
         # print(url)
         webbrowser.open(url, autoraise=False)
         end_speech = 'tìm kiếm ' + query
         var.set(end_speech)
         window.update()
-        speak(end_speech, 'search.mp3')
+        speak(end_speech)
 
     #open music on youtube
     elif 'bật' in text:
@@ -189,27 +272,30 @@ def _play():
             webbrowser.open(DEFAULT_MUSIC, autoraise=False)
             var.set('bật nhạc')    
             window.update()
-            speak('bật nhạc', 'music.mp3')
+            speak('bật nhạc')
         else:
             ytsearch = YoutubeSearch(query, max_results=1).to_dict()
+            print("youtube search: ", ytsearch)
+            print("query: ", query)
             if len(ytsearch) > 0:
                 results = ytsearch[0]
-                url = 'youtube.com' + results.get('link')
+                url = 'https://youtube.com' + results.get('link')
                 print(url)
                 webbrowser.open(url, autoraise=False)    #autoraise=false không hoạt động ở windows
                 end_speech = 'mở bài ' + query
                 var.set(end_speech)
                 window.update()
-                speak(end_speech, 'music.mp3')
+                speak(end_speech)
             else:
-                var.set('Jarvis không tìm thấy bài ' + query)
+                temp = 'Mai Thúy không tìm thấy bài ' + query
+                var.set(temp)
                 window.update()
-                speak('Jarvis không tìm thấy bài ' + query, 'sorry.mp3')
+                speak(temp)
 
     else:
-        var.set('Jarvis không hiểu bạn')
+        var.set('Mai Thúy không biết câu trả lời ')
         window.update()
-        speak('Javis không hiểu bạn nói gì')
+        speak('Mai Thúy không biết câu trả lời ')
         
 
 if __name__ == '__main__':
@@ -224,7 +310,7 @@ if __name__ == '__main__':
     
     label1.pack()
 
-    window.title('JARVIS')
+    window.title('Mai Thúy')
 
     label = Label(window, width = 500, height = 500)
     label.pack()
@@ -238,5 +324,5 @@ if __name__ == '__main__':
     btn2.pack()
     window.after(600, speak, 'hãy ấn bắt đầu để khởi động trợ lý ảo', 'greeting0.mp3')
     window.mainloop()
-    # speak('hãy ấn bắt đầu để khởi động trợ lý ảo', 'greeting0.mp3')
+    
     
