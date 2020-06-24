@@ -8,7 +8,7 @@ Xin chào/ tạm biệt. (Quang Anh)
 -Mở nhạc.			nam
 
 -Mở trình duyệt.		nam
-
+-Game Hangman.  h
 
 -Tìm kiếm … 		nam
 
@@ -28,4 +28,5 @@ List of questions:
  
  
  - tôi đang ở đâu. Hằng
+
 
