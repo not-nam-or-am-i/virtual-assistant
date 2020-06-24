@@ -1,18 +1,19 @@
 # virtual-assistant
 speech processing final project
 
-List of tasks:\\
+List of tasks:
 
 Xin chào/ tạm biệt. (Quang Anh)
 
 -Mở nhạc.			nam
 
 -Mở trình duyệt.		nam
--Game Hangman.  h
+
 
 -Tìm kiếm … 		nam
 
 -Mở máy ảnh (Quang Anh) (chưa có )
+-L
 
 List of questions:
 -Thời tiết hôm nay thế nào ? (Quang Anh)
