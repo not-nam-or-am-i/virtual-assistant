@@ -9,11 +9,11 @@ Xin chào/ tạm biệt. (Quang Anh)
 
 -Mở trình duyệt.		nam
 
-
+- game hangman. hang. ( chua co )
 -Tìm kiếm … 		nam
 
 -Mở máy ảnh (Quang Anh) (chưa có )
--L
+
 
 List of questions:
 -Thời tiết hôm nay thế nào ? (Quang Anh)
