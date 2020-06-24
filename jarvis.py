@@ -13,6 +13,7 @@ import json
 import playsound
 from googlesearch import search
 from youtube_search import YoutubeSearch
+import time
 
 DEFAULT_MUSIC = 'https://www.youtube.com/watch?v=3jWRrafhO7M'
 
@@ -31,9 +32,8 @@ def speak(text, filename='voice.mp3'):
     tts = gTTS(text=text, lang='vi')
     tts.save(filename)
     playsound.playsound(filename)
-    # sound = AudioSegment.from_mp3(filename)
-    # play(sound)
-    
+
+
 def takeCommand():
     r = sr.Recognizer()
     query=""
@@ -41,6 +41,7 @@ def takeCommand():
         var.set("Đang nghe...")
         window.update()
         print("Listening...")        
+        audio = r.adjust_for_ambient_noise(source, duration=0.5) # listen for 1 second to calibrate the energy threshold for ambient noise levels
         audio = r.listen(source)
         try:
             var.set("Đang nhận diện...")
@@ -133,13 +134,80 @@ def get_weather():
     content = f"Thời tiết {city} {descr}. Nhiệt độ {temp} độ. Độ ẩm {humid} phần trăm."
     return content
 
+###
+
+
+def get_time(ques: str):
+    list_ques = ["mấy giờ", "thời gian"] 
+    flag = 0
+    for i in list_ques:
+        if i in ques:
+            flag = 1
+    if flag == 1 :        
+        seconds = time.time()
+        # local_time = time.ctime(seconds)
+        res = time.localtime(seconds)
+        hour = res.tm_hour
+        # year = res.tm_year
+        minute = res.tm_min
+        ans = "Hiện tại là, " + str(hour) + " giờ," + str(minute) + " phút"
+        speak(ans )
+        print(ans)
+
+def get_location(ques: str) : # answer user's location , city, country, longtitude, latitude.
+    list_ques = ["ở đâu", "chỗ nào", "vị trí"] 
+    flag = 0
+    for i in list_ques:
+        if i in ques:
+            flag = 1
+    if flag == 1 :
+        send_url = "http://api.ipstack.com/check?access_key=e7c7c4dd6664f61df983df6ac60d4265"
+        geo_req = requests.get(send_url)
+        geo_json = json.loads(geo_req.text)
+        lat = geo_json['latitude']
+        
+        longi = geo_json['longitude']
+        country = geo_json['country_name']
+        cit = geo_json['city']
+        if cit.lower() == "hanoi":
+            cit = " Hà Nội "
+        location_ = "bạn đang ở thành phố: " + cit + ". Quốc gia: " + country 
+        speak(location_)
+        print(location_)
+
+def get_day(ques: str):
+    list_ques = ["thứ mấy", "ngày bao nhiêu", "ngày nào"] 
+    flag = 0
+    for i in list_ques:
+        if i in ques:
+            flag = 1
+    if flag == 1 :        
+        dt = datetime.datetime.today()
+        year = dt.year
+        month = dt.month
+        day = dt.day
+        weekday = dt.weekday()
+        weekday += 2
+        if weekday == 8 :
+            weekday = "chủ nhật"
+        else :
+            weekday = "thứ " + str(weekday)
+        ans = "Hôm nay là " + str(weekday) + ", ngày " + str(day) + " , tháng : " + str(month)
+        speak(ans )
+        print(ans)            
+
+
 ###    
 def _play():    
     btn2['state'] = 'disabled'    
     btn1.configure(bg = 'orange')         
           
-        # btn1.configure(bg = 'orange')
     text = takeCommand().lower()
+    print("text: ", text)
+    get_location(text)
+    get_day(text)
+    get_time(text)
+
     if 'kết thúc' in text:
         goodbye()
         window.destroy()
@@ -147,7 +215,7 @@ def _play():
     elif 'xin chào' in text:
         hello()
 
-    elif 'gọi tôi là' in text:
+    elif 'tôi là' or "tên tôi là" or "tôi tên là" in text:
         id_end = text.find("gọi tôi là") + len("gọi tôi là ")
         show_name(text[id_end:])
     elif 'thời tiết' in text:            
