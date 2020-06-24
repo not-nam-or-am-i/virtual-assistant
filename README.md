@@ -23,11 +23,11 @@ List of questions:
 -Nếu ngủ bây giờ thì tôi nên thức dậy vào mấy giờ ? (Quang Anh)
 
 - Bây giờ là mấy giờ ? Hằng
-
+- nghe tin tuc new hom nay vnepress . Hang 
 
  - Hôm nay thứ mấy, ngày / tháng/ năm Hằng 
  
  
  - tôi đang ở đâu. Hằng
- - ngh
+
 
