@@ -37,6 +37,8 @@ List of questions:
 
 - "xin chào": chào hỏi
 
+- "thời tiết thế nào": hỏi thời tiết ngày hôm nay
+
 - "gọi tôi là [tên]": nói tên cho jarvis
 
 - "mở trình duyệt": mở trình duyệt mặc định trên máy
