@@ -5,13 +5,13 @@ List of tasks:
 
 Xin chào/ tạm biệt. (Quang Anh)
 
--Mở nhạc.			nam
+-Mở video trên youtube.			(Nam)
 
--Mở trình duyệt.		nam
+-Mở trình duyệt.		(Nam)
 
 -game hangman. hang. ( chua co )
 
--Tìm kiếm … 		nam
+-Tìm kiếm … 		(Nam)
 
 -Mở máy ảnh (Quang Anh) (chưa có )
 
