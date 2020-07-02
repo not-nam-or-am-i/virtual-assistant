@@ -43,8 +43,10 @@ List of questions:
 
 - "mở trình duyệt": mở trình duyệt mặc định trên máy
 
-- "tìm [nội dung]": tra mạng nội dung cần tìm
+- "tìm [nội dung]": tra google nội dung cần tìm
 
-- "bật nhạc", "bật [tên bài hát]": mở nhạc
+- "tìm trên youtube [nội dung]": tra trên youtube
+
+- "bật nhạc", "bật [nội dung]": mở video trên youtube
 
 - "kết thúc": tắt chương trình
