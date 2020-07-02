@@ -20,7 +20,7 @@ def play(text):
         url = text[urlpos: urlpos+11]
         # print(url)
         webbrowser.open('https://www.youtube.com/watch?v='+url)
-        return 'mở ' + query
+        return 'bật video ' + query
 
 def search_youtube(text):
     pos = text.find('tìm trên youtube')

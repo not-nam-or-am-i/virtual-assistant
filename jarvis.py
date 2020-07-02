@@ -16,8 +16,10 @@ import playsound
 import threading
 import bs4, requests
 import sys
+import subprocess
 from browser import *
 from youtube import *
+from wakeup import *
 
 numbers = {'hundred':100, 'thousand':1000, 'lakh':100000}
 a = {'name':'your email'}
@@ -55,9 +57,11 @@ def takeCommand():
     var1.set(query)
     window.update()
     return query
-    
+
 #id = 77 to start hello
 frames = [PhotoImage(file='Assistant.gif',format = 'gif -index %i' %(i)) for i in range(1,100)]
+
+
 
 def get_user_name():
     if(not os.path.exists("name.txt")):
@@ -183,11 +187,27 @@ def _play():
         window.update()
         speak(end_speech)
 
+    elif 'máy ảnh' in text:
+        var.set("Mở máy ảnh")
+        window.update()        
+        subprocess.run('start microsoft.windows.camera:', shell=True)
+        speak('Mở máy ảnh')
+
+    elif 'thức dậy' in text:
+        best_time = get_wakeup_time()
+        var.set(f"{best_time[0].hour}:{best_time[0].minute} hoặc {best_time[1].hour}:{best_time[1].minute}")
+        window.update()
+        speak(f"Bạn nên dậy vào {best_time[0].hour} giờ {best_time[0].minute} phút hoặc {best_time[1].hour} giờ {best_time[1].minute} phút")  
+
     else:
         var.set('Jarvis không hiểu bạn')
         window.update()
         speak('Javis không hiểu bạn nói gì')
         
+#Press space
+def key(event):    
+    if (repr(event.char)=="' '"):
+        _play()
 
 if __name__ == '__main__':
     label2 = Label(window, textvariable = var1, bg = '#FAB60C')
@@ -214,4 +234,5 @@ if __name__ == '__main__':
     btn2.config(font=("Courier", 12))
     btn2.pack()
     window.after(600, speak, 'hãy ấn bắt đầu để khởi động trợ lý ảo')
+    window.bind("<Key>", key)
     window.mainloop()
