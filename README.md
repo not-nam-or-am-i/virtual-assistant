@@ -50,3 +50,7 @@ List of questions:
 - "bật nhạc", "bật [nội dung]": mở video trên youtube
 
 - "kết thúc": tắt chương trình
+
+- "mở máy ảnh": mở máy ảnh
+
+- "khi nào tôi nên thức dậy": tính giời gian thức dậy hợp lý nếu đi ngủ tại thời điểm hiện tại
