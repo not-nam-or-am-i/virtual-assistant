@@ -20,6 +20,7 @@ import subprocess
 from browser import *
 from youtube import *
 from wakeup import *
+from wiki import *
 
 numbers = {'hundred':100, 'thousand':1000, 'lakh':100000}
 a = {'name':'your email'}
@@ -198,6 +199,12 @@ def _play():
         var.set(f"{best_time[0].hour}:{best_time[0].minute} hoặc {best_time[1].hour}:{best_time[1].minute}")
         window.update()
         speak(f"Bạn nên dậy vào {best_time[0].hour} giờ {best_time[0].minute} phút hoặc {best_time[1].hour} giờ {best_time[1].minute} phút")  
+    
+    elif 'là ai' in text or 'là gì' in text or 'là cái gì' in text:
+        end_speech = answer_wiki(text)
+        var.set(end_speech)
+        window.update()
+        speak(end_speech)
 
     else:
         var.set('Jarvis không hiểu bạn')
