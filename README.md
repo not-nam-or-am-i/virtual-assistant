@@ -13,7 +13,7 @@ Xin chào/ tạm biệt. (Quang Anh)
 
 -Tìm kiếm trên google và youtube 		(Nam)
 
--Mở máy ảnh (Quang Anh) (chưa có )
+-Mở máy ảnh (Quang Anh)
 
 
 List of questions:
