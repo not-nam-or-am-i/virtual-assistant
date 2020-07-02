@@ -11,7 +11,7 @@ Xin chào/ tạm biệt. (Quang Anh)
 
 -game hangman. hang. ( chua co )
 
--Tìm kiếm … 		(Nam)
+-Tìm kiếm trên google và youtube 		(Nam)
 
 -Mở máy ảnh (Quang Anh) (chưa có )
 
