@@ -16,8 +16,8 @@ from youtube_search import YoutubeSearch
 import threading
 import bs4, requests
 import sys
-
-DEFAULT_MUSIC = 'https://www.youtube.com/watch?v=3jWRrafhO7M'
+from browser import *
+from youtube import *
 
 numbers = {'hundred':100, 'thousand':1000, 'lakh':100000}
 a = {'name':'your email'}
@@ -144,58 +144,68 @@ def _play():
     btn1.configure(bg = 'orange')         
           
         # btn1.configure(bg = 'orange')
-    # text = takeCommand().lower()
-    text = 'bật thắc mắc thịnh suy'
+    text = takeCommand().lower()
     if 'tìm trên youtube' in text:
         #get query string
-        pos = text.find('tìm trên youtube')
-        query = text[pos+len('tìm trên youtube'):].strip()
-        query = query.replace(' ', '+')
-        webbrowser.open('https://www.youtube.com/results?search_query=' + query, autoraise=False)
+        # pos = text.find('tìm trên youtube')
+        # query = text[pos+len('tìm trên youtube'):].strip()
+        # searchTerm = query.replace(' ', '+')
+        # webbrowser.open('https://www.youtube.com/results?search_query=' + searchTerm, autoraise=False)
+        end_speech = search_youtube(text)
+        var.set(end_speech)
+        window.update()
+        speak(end_speech)
+        
     elif 'tìm' in text:
         #get query string
-        pos = text.find('tìm')
-        query = text[pos+len('tìm'):].strip()
-        webbrowser.open('https://google.com/?#q=' + query, autoraise=False)
-        end_speech = 'tìm kiếm ' + query
+        # pos = text.find('tìm')
+        # query = text[pos+len('tìm'):].strip()
+        # webbrowser.open('https://google.com/?#q=' + query, autoraise=False)
+        # end_speech = 'tìm kiếm ' + query
+        end_speech = search_google(text)
         var.set(end_speech)
         window.update()
         speak(end_speech)
     #bật video trên youtube
     elif 'bật' in text:
         #get query string
-        pos = text.find('bật')
-        query = text[pos+len('bật'):].strip()
-        if query == 'nhạc' or query == 'nhạc đi':
-            webbrowser.open(DEFAULT_MUSIC, autoraise=False)
-            var.set('bật nhạc')    
-            window.update()
-            speak('bật nhạc')
-        else:
-            # ytsearch = YoutubeSearch(query, max_results=10).to_dict()
-            # print(ytsearch)
-            # if len(ytsearch) > 0:
-            #     results = ytsearch[0]
-            #     url = 'youtube.com' + results.get('link')
-            #     print(url)
-            #     webbrowser.open(url, autoraise=False)    #autoraise=false không hoạt động ở windows
-            #     end_speech = 'mở bài ' + query
-            #     var.set(end_speech)
-            #     window.update()
-            #     speak(end_speech, 'music.mp3')
-            # else:
-            #     var.set('Jarvis không tìm thấy bài ' + query)
-            #     window.update()
-            #     speak('Jarvis không tìm thấy bài ' + query, 'sorry.mp3')
-            query=query.replace(' ', '+')
-            text = requests.get('https://www.youtube.com/results?search_query='+query).text
-            soup = bs4.BeautifulSoup(text)
-            idpos = text.find('videoId')
-            # print(idpos)
-            urlpos = idpos + len("videoId") + 3
-            url = text[urlpos: urlpos+11]
-            # print(url)
-            webbrowser.open('https://www.youtube.com/watch?v='+url)
+        # pos = text.find('bật')
+        # query = text[pos+len('bật'):].strip()
+        # if query == 'nhạc' or query == 'nhạc đi':
+        #     webbrowser.open(DEFAULT_MUSIC, autoraise=False)
+        #     var.set('bật nhạc')    
+        #     window.update()
+        #     speak('bật nhạc')
+        # else:
+        #     # ytsearch = YoutubeSearch(query, max_results=10).to_dict()
+        #     # print(ytsearch)
+        #     # if len(ytsearch) > 0:
+        #     #     results = ytsearch[0]
+        #     #     url = 'youtube.com' + results.get('link')
+        #     #     print(url)
+        #     #     webbrowser.open(url, autoraise=False)    #autoraise=false không hoạt động ở windows
+        #     #     end_speech = 'mở bài ' + query
+        #     #     var.set(end_speech)
+        #     #     window.update()
+        #     #     speak(end_speech, 'music.mp3')
+        #     # else:
+        #     #     var.set('Jarvis không tìm thấy bài ' + query)
+        #     #     window.update()
+        #     #     speak('Jarvis không tìm thấy bài ' + query, 'sorry.mp3')
+        #     searchTerm = query.replace(' ', '+')
+        #     text = requests.get('https://www.youtube.com/results?search_query='+searchTerm).text
+        #     soup = bs4.BeautifulSoup(text)
+        #     idpos = text.find('videoId')
+        #     # print(idpos)
+        #     urlpos = idpos + len("videoId") + 3
+        #     url = text[urlpos: urlpos+11]
+        #     # print(url)
+        #     webbrowser.open('https://www.youtube.com/watch?v='+url)
+        end_speech = play(text)
+        var.set(end_speech)
+        window.update()
+        speak(end_speech)
+
     elif 'kết thúc' in text:
         goodbye()
         window.destroy()
@@ -214,11 +224,12 @@ def _play():
 
         #open browser
     elif 'mở trình duyệt' in text:
-        url='google.com'
-        webbrowser.open(url, autoraise=False)
-        var.set('mở trình duyệt')
+        # url='google.com'
+        # webbrowser.open(url, autoraise=False)
+        end_speech = open_browser()
+        var.set(end_speech)
         window.update()
-        speak('mở trình duyệt')
+        speak(end_speech)
 
     else:
         var.set('Jarvis không hiểu bạn')
