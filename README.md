@@ -17,10 +17,9 @@ Xin chào/ tạm biệt. (Quang Anh)
 
 
 List of questions:
+-Trả lời cầu hỏi "là ai", "là gì"   (Nam)
 
 -Thời tiết hôm nay thế nào ? (Quang Anh)
-
--Chủ tịch nước Việt Nam là ai ? (Quang Anh)
 
 -Nếu ngủ bây giờ thì tôi nên thức dậy vào mấy giờ ? (Quang Anh)
 
