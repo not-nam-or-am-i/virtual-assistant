@@ -13,6 +13,9 @@ import json
 import playsound
 from googlesearch import search
 from youtube_search import YoutubeSearch
+import threading
+import bs4, requests
+import sys
 
 DEFAULT_MUSIC = 'https://www.youtube.com/watch?v=3jWRrafhO7M'
 
@@ -28,11 +31,13 @@ var = StringVar()
 var1 = StringVar()
 
 def speak(text, filename='voice.mp3'):
+    os.remove(filename)
     tts = gTTS(text=text, lang='vi')
     tts.save(filename)
-    playsound.playsound(filename)
+    # playsound.playsound(filename)
     # sound = AudioSegment.from_mp3(filename)
     # play(sound)
+    threading.Thread(target=playsound.playsound, args=(filename,)).start()
     
 def takeCommand():
     r = sr.Recognizer()
@@ -88,9 +93,9 @@ def hello():
     global ind
     ind = 77
     if(user_name==""):                
-        speak("xin chào người dùng. Jarvis vẫn chưa biết tên của bạn. Bạn muốn được gọi là gì ?", 'greeting1.mp3')       
+        speak("xin chào người dùng. Jarvis vẫn chưa biết tên của bạn. Bạn muốn được gọi là gì ?")       
     else:
-        speak(f"xin chào {user_name}. Jarvis có thể giúp gì cho bạn.", 'greeting2.mp3')        
+        speak(f"xin chào {user_name}. Jarvis có thể giúp gì cho bạn.")        
     
 def show_name(name):
     global user_name
@@ -109,7 +114,7 @@ def goodbye():
     window.update()
     global ind
     ind = 77
-    speak(f"tạm biệt {user_name}", 'bye.mp3')
+    speak(f"tạm biệt {user_name}")
 
 def get_weather():
     # Enter your API key here 
@@ -139,8 +144,59 @@ def _play():
     btn1.configure(bg = 'orange')         
           
         # btn1.configure(bg = 'orange')
-    text = takeCommand().lower()
-    if 'kết thúc' in text:
+    # text = takeCommand().lower()
+    text = 'bật thắc mắc thịnh suy'
+    if 'tìm trên youtube' in text:
+        #get query string
+        pos = text.find('tìm trên youtube')
+        query = text[pos+len('tìm trên youtube'):].strip()
+        query = query.replace(' ', '+')
+        webbrowser.open('https://www.youtube.com/results?search_query=' + query, autoraise=False)
+    elif 'tìm' in text:
+        #get query string
+        pos = text.find('tìm')
+        query = text[pos+len('tìm'):].strip()
+        webbrowser.open('https://google.com/?#q=' + query, autoraise=False)
+        end_speech = 'tìm kiếm ' + query
+        var.set(end_speech)
+        window.update()
+        speak(end_speech)
+    #bật video trên youtube
+    elif 'bật' in text:
+        #get query string
+        pos = text.find('bật')
+        query = text[pos+len('bật'):].strip()
+        if query == 'nhạc' or query == 'nhạc đi':
+            webbrowser.open(DEFAULT_MUSIC, autoraise=False)
+            var.set('bật nhạc')    
+            window.update()
+            speak('bật nhạc')
+        else:
+            # ytsearch = YoutubeSearch(query, max_results=10).to_dict()
+            # print(ytsearch)
+            # if len(ytsearch) > 0:
+            #     results = ytsearch[0]
+            #     url = 'youtube.com' + results.get('link')
+            #     print(url)
+            #     webbrowser.open(url, autoraise=False)    #autoraise=false không hoạt động ở windows
+            #     end_speech = 'mở bài ' + query
+            #     var.set(end_speech)
+            #     window.update()
+            #     speak(end_speech, 'music.mp3')
+            # else:
+            #     var.set('Jarvis không tìm thấy bài ' + query)
+            #     window.update()
+            #     speak('Jarvis không tìm thấy bài ' + query, 'sorry.mp3')
+            query=query.replace(' ', '+')
+            text = requests.get('https://www.youtube.com/results?search_query='+query).text
+            soup = bs4.BeautifulSoup(text)
+            idpos = text.find('videoId')
+            # print(idpos)
+            urlpos = idpos + len("videoId") + 3
+            url = text[urlpos: urlpos+11]
+            # print(url)
+            webbrowser.open('https://www.youtube.com/watch?v='+url)
+    elif 'kết thúc' in text:
         goodbye()
         window.destroy()
         # break    
@@ -154,7 +210,7 @@ def _play():
         weather_description = get_weather()
         var.set(weather_description)    
         window.update()        
-        speak(weather_description, 'weather.mp3')
+        speak(weather_description)
 
         #open browser
     elif 'mở trình duyệt' in text:
@@ -162,49 +218,7 @@ def _play():
         webbrowser.open(url, autoraise=False)
         var.set('mở trình duyệt')
         window.update()
-        speak('mở trình duyệt', 'browser.mp3')
-
-    #search: mở link đầu tiên trên tab mới
-    elif 'tìm' in text:
-        #get query string
-        pos = text.find('tìm')
-        query = text[pos+len('tìm'):].strip()
-
-        #mở link đầu tiên trên trình duyệt
-        url = next(search(query, tld='com', lang='en', num=1, domains= ['com', 'org', 'vn'], start=0, stop=None, pause=2))
-        # print(url)
-        webbrowser.open(url, autoraise=False)
-        end_speech = 'tìm kiếm ' + query
-        var.set(end_speech)
-        window.update()
-        speak(end_speech, 'search.mp3')
-
-    #open music on youtube
-    elif 'bật' in text:
-        # subprocess.call(r'C:\Users\Acer\AppData\Roaming\Spotify/Spotify.exe')
-        #get query string
-        pos = text.find('bật')
-        query = text[pos+len('bật'):].strip()
-        if query == 'nhạc' or query == 'nhạc đi':
-            webbrowser.open(DEFAULT_MUSIC, autoraise=False)
-            var.set('bật nhạc')    
-            window.update()
-            speak('bật nhạc', 'music.mp3')
-        else:
-            ytsearch = YoutubeSearch(query, max_results=1).to_dict()
-            if len(ytsearch) > 0:
-                results = ytsearch[0]
-                url = 'youtube.com' + results.get('link')
-                print(url)
-                webbrowser.open(url, autoraise=False)    #autoraise=false không hoạt động ở windows
-                end_speech = 'mở bài ' + query
-                var.set(end_speech)
-                window.update()
-                speak(end_speech, 'music.mp3')
-            else:
-                var.set('Jarvis không tìm thấy bài ' + query)
-                window.update()
-                speak('Jarvis không tìm thấy bài ' + query, 'sorry.mp3')
+        speak('mở trình duyệt')
 
     else:
         var.set('Jarvis không hiểu bạn')
@@ -236,7 +250,7 @@ if __name__ == '__main__':
     btn2 = Button(text = 'Kết thúc',width = 20, command = window.destroy, bg = '#5C85FB')
     btn2.config(font=("Courier", 12))
     btn2.pack()
-    window.after(600, speak, 'hãy ấn bắt đầu để khởi động trợ lý ảo', 'greeting0.mp3')
+    window.after(600, speak, 'hãy ấn bắt đầu để khởi động trợ lý ảo')
     window.mainloop()
     # speak('hãy ấn bắt đầu để khởi động trợ lý ảo', 'greeting0.mp3')
     

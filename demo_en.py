@@ -75,7 +75,8 @@ if 'play' in text:
         webbrowser.open(DEFAULT_MUSIC, autoraise=False)    
         speak('play music', 'music.mp3')
     else:
-        ytsearch = YoutubeSearch(query, max_results=1).to_dict()
+        ytsearch = YoutubeSearch('SDFGASDFASDFASDF', max_results=10).to_dict()
+        print(ytsearch)
         if len(ytsearch) > 0:
             results = ytsearch[0]
             url = 'youtube.com' + results.get('link')
