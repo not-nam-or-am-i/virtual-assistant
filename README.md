@@ -9,7 +9,7 @@ Xin chào/ tạm biệt. (Quang Anh)
 
 -Mở trình duyệt.		(Nam)
 
--game hangman. hang. ( chua co )
+-game cau do. hang. ( chua co )
 
 -Tìm kiếm trên google và youtube 		(Nam)
 
@@ -53,3 +53,15 @@ List of questions:
 - "mở máy ảnh": mở máy ảnh
 
 - "khi nào tôi nên thức dậy": tính giời gian thức dậy hợp lý nếu đi ngủ tại thời điểm hiện tại
+
+- "Hôm nay có tin tức/tin chính/thời sự gì ? " : Đọc 5 tin tức thời sự mới nhất ( nguồn vnexpress )
+
+- "Bây giờ là mấy giờ ?/ Thời gian hiện tại ?"
+
+- "Hôm nay là thứ mấy ?/ Hôm nay ngày bao nhiêu ? " : trả lời thứ, ngày , tháng.
+
+- "Vị trí hiện tại của tôi ? / Tôi đang ở đâu ? " : trả lời tỉnh/thành phố, quốc gia bạn đang ở.
+
+- "Chơi game cùng tôi / Chơi trò câu đố " : Trợ lý sẽ chơi game câu đố với bạn, bạn cần trả lời đúng keyword của đáp án là thành công.
+
+
