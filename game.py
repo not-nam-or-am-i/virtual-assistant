@@ -6,7 +6,7 @@ from numpy.random import randint
 
 game_list = { "Sở thú bị cháy ,đố bạn con gì chạy ra đầu tiên?" : "người",
              "Mỗi năm có 7 tháng 31 ngày. Đố bạn có bao nhiêu tháng có ngày 28 ? ": "12",
-             "Tại sao 30 người đàn ông và 2 người đàn bà đánh nhau tán loạn ?": "cờ",
+             "Tại sao 30 người đàn ông và 2 người đàn bà đánh nhau toán loạn ?": "cờ",
              "Bệnh gì bác sỹ bó tay" : "gãy tay",
              "Con gì ăn lửa với nước than": "con tàu",
              "Nắng ba năm tôi ko bỏ bạn, mưa 1 ngày sao bạn lại bỏ tôi là cái gì?" : "bóng",
