@@ -1,7 +1,7 @@
 # virtual-assistant
 speech processing final project
 
-List of tasks:
+# List of tasks:
 
 Xin chào/ tạm biệt. (Quang Anh)
 
@@ -32,7 +32,7 @@ List of questions:
 -tôi đang ở đâu. (Hằng)
 
 
-# hướng dẫn sử dụng
+# Hướng dẫn sử dụng
 
 - "xin chào": chào hỏi
 
