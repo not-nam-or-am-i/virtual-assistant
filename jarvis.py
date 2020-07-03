@@ -1,6 +1,4 @@
 from tkinter import *
-# from pydub import AudioSegment
-# from pydub.playback import play
 from gtts import gTTS
 import datetime
 import speech_recognition as sr
@@ -11,16 +9,17 @@ import smtplib
 import requests
 import json
 import playsound
-# from googlesearch import search
-# from youtube_search import YoutubeSearch
 import threading
 import bs4, requests
 import sys
 import subprocess
+from local_time import *
 from browser import *
 from youtube import *
 from wakeup import *
 from wiki import *
+from vietnam_news import *
+from game import *
 
 numbers = {'hundred':100, 'thousand':1000, 'lakh':100000}
 a = {'name':'your email'}
@@ -38,6 +37,12 @@ def speak(text, filename='voice.mp3'):
     tts = gTTS(text=text, lang='vi')
     tts.save(filename)
     threading.Thread(target=playsound.playsound, args=(filename,)).start()
+
+def asynchronous_speak(text, filename='voice.mp3'):
+    os.remove(filename)
+    tts = gTTS(text=text, lang='vi')
+    tts.save(filename)       
+    playsound.playsound(filename) 
     
 def takeCommand():
     r = sr.Recognizer()
@@ -46,22 +51,22 @@ def takeCommand():
         var.set("Đang nghe...")
         window.update()
         print("Listening...")        
-        audio = r.listen(source)
+        audio = r.adjust_for_ambient_noise(source, duration=0.5) # listen 0.5s for recognizing noise , listen for 0.5 second to calibrate the energy threshold for ambient noise levels
+        audio = r.listen(source, timeout=7, phrase_time_limit=10)        
         try:
             var.set("Đang nhận diện...")
             window.update()
-            print("Recognizing")
+            print("Đang nhận diện...")
             query = r.recognize_google(audio, language='vi-VN')
         except Exception as e:
-            print('zxcvzxcv')
+            print('exception in google recognizing ...')
             return "None"
     var1.set(query)
     window.update()
     return query
-
+    
 #id = 77 to start hello
 frames = [PhotoImage(file='Assistant.gif',format = 'gif -index %i' %(i)) for i in range(1,100)]
-
 
 
 def get_user_name():
@@ -140,53 +145,81 @@ def get_weather():
     content = f"Thời tiết {city} {descr}. Nhiệt độ {temp} độ. Độ ẩm {humid} phần trăm."
     return content
 
+# 
+def respond_to_user(ans: str):
+    var.set(ans)
+    window.update()
+    speak(ans)    
+
+def respond_to_user_asynchronous(ans:str):
+    var.set(ans)
+    window.update()
+    asynchronous_speak(ans)        
 ###    
 def _play():    
     btn2['state'] = 'disabled'    
     btn1.configure(bg = 'orange')         
           
-        # btn1.configure(bg = 'orange')
+        
     text = takeCommand().lower()
-    if 'tìm trên youtube' in text:
-        end_speech = search_youtube(text)
-        var.set(end_speech)
+    # text = "hôm nay có tin tức gì  ?"
+
+    tem1, _ = get_news(text)
+    tem2, ans2 = play_hangman(text)
+
+    if tem2 != "false": # choi game
+        respond_to_user(ans2)
+    elif 'kết thúc' in text:
+        goodbye()
+        window.destroy()      
+          
+    elif 'thức dậy' in text:
+        best_time = get_wakeup_time()
+        var.set(f"{best_time[0].hour}:{best_time[0].minute} hoặc {best_time[1].hour}:{best_time[1].minute}")
         window.update()
-        speak(end_speech)
+        speak(f"Bạn nên dậy vào {best_time[0].hour} giờ {best_time[0].minute} phút hoặc {best_time[1].hour} giờ {best_time[1].minute} phút")  
+            
+
+    elif get_location(text) != "false":
+        respond_to_user(""+get_location(text))
+
+    elif get_day(text) != "false":
+        respond_to_user(""+get_day(text))
+    
+    elif get_time(text) != "false" :
+        respond_to_user(""+get_time(text))
+
+    elif tem1 != "false":  # get news
+        _, news_list = get_news(text)
+        for i in range(len(news_list)):
+            ans = news_list[i]
+            respond_to_user_asynchronous(ans)
+
+    elif 'tìm trên youtube' in text:
+        end_speech = search_youtube(text)
+        respond_to_user(end_speech)
         
     elif 'tìm' in text:
         end_speech = search_google(text)
-        var.set(end_speech)
-        window.update()
-        speak(end_speech)
+        respond_to_user(end_speech)
     #bật video trên youtube
     elif 'bật' in text:
         end_speech = play(text)
-        var.set(end_speech)
-        window.update()
-        speak(end_speech)
+        respond_to_user(end_speech)
 
-    elif 'kết thúc' in text:
-        goodbye()
-        window.destroy()
         # break    
     elif 'xin chào' in text:
         hello()
-
     elif 'gọi tôi là' in text:
         id_end = text.find("gọi tôi là") + len("gọi tôi là ")
         show_name(text[id_end:])
     elif 'thời tiết' in text:            
         weather_description = get_weather()
-        var.set(weather_description)    
-        window.update()        
-        speak(weather_description)
-
+        respond_to_user(weather_description)
         #open browser
     elif 'mở trình duyệt' in text:
         end_speech = open_browser()
-        var.set(end_speech)
-        window.update()
-        speak(end_speech)
+        respond_to_user(weather_description)
 
     elif 'máy ảnh' in text:
         var.set("Mở máy ảnh")
@@ -194,17 +227,9 @@ def _play():
         subprocess.run('start microsoft.windows.camera:', shell=True)
         speak('Mở máy ảnh')
 
-    elif 'thức dậy' in text:
-        best_time = get_wakeup_time()
-        var.set(f"{best_time[0].hour}:{best_time[0].minute} hoặc {best_time[1].hour}:{best_time[1].minute}")
-        window.update()
-        speak(f"Bạn nên dậy vào {best_time[0].hour} giờ {best_time[0].minute} phút hoặc {best_time[1].hour} giờ {best_time[1].minute} phút")  
-    
     elif 'là ai' in text or 'là gì' in text or 'là cái gì' in text:
         end_speech = answer_wiki(text)
-        var.set(end_speech)
-        window.update()
-        speak(end_speech)
+        respond_to_user(end_speech)
 
     else:
         var.set('Jarvis không hiểu bạn')
