@@ -15,6 +15,7 @@ Xin chào/ tạm biệt. (Quang Anh)
 
 -Mở máy ảnh (Quang Anh)
 
+-Nghe tin tức news hôm nay, nguồn vnepress . (Hằng )
 
 List of questions:
 
@@ -24,13 +25,11 @@ List of questions:
 
 -Nếu ngủ bây giờ thì tôi nên thức dậy vào mấy giờ ? (Quang Anh)
 
--Bây giờ là mấy giờ ? Hằng
+-Bây giờ là mấy giờ ? (Hằng)
 
-- Nghe tin tức news hôm nay, nguồn vnepress . Hang
+-Hôm nay thứ mấy, ngày / tháng/ năm (Hằng)
 
--Hôm nay thứ mấy, ngày / tháng/ năm Hằng
-
--tôi đang ở đâu. Hằng
+-tôi đang ở đâu. (Hằng)
 
 
 # hướng dẫn sử dụng
