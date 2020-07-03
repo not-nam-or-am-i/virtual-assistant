@@ -9,7 +9,7 @@ Xin chào/ tạm biệt. (Quang Anh)
 
 -Mở trình duyệt.		(Nam)
 
--game cau do. hang. ( chua co )
+-game cau do. (hằng )
 
 -Tìm kiếm trên google và youtube 		(Nam)
 
