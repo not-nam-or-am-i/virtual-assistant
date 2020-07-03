@@ -36,9 +36,9 @@ List of questions:
 
 - "xin chào": chào hỏi
 
-- "thời tiết thế nào": hỏi thời tiết ngày hôm nay
-
 - "gọi tôi là [tên]": nói tên cho jarvis
+
+- "thời tiết thế nào": hỏi thời tiết ngày hôm nay
 
 - "mở trình duyệt": mở trình duyệt mặc định trên máy
 
@@ -47,8 +47,6 @@ List of questions:
 - "tìm trên youtube [nội dung]": tra trên youtube
 
 - "bật nhạc", "bật [nội dung]": mở video trên youtube
-
-- "kết thúc": tắt chương trình
 
 - "mở máy ảnh": mở máy ảnh
 
@@ -64,4 +62,5 @@ List of questions:
 
 - "Chơi game cùng tôi / Chơi trò câu đố " : Trợ lý sẽ chơi game câu đố với bạn, bạn cần trả lời đúng keyword của đáp án là thành công.
 
+- "kết thúc": tắt chương trình
 
