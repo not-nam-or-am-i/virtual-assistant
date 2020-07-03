@@ -66,12 +66,8 @@ def play_hangman(ques: str):
             seed(seed_num) 
             number_ = randint(0, len(game_list), 1)[0]
             cau_hoi = key_list[number_]
-            if f.write(""+cau_hoi) :
-                print("write successfully")
-                f.close()   
-            else:
-                print("write unsuccessfully ...")         
-            # tra_loi = val_list[number_]   
+            f.write(""+cau_hoi)
+            f.close()    
             ans = cau_hoi
             return "true", ans   
         else:      
