@@ -23,7 +23,7 @@ game_list = { "Sở thú bị cháy ,đố bạn con gì chạy ra đầu tiên?
              "Miệng rộng nhưng không nói một từ, là gì?" : "sông",
              "Hoa gì biết ăn, biết nói, biết hát ...?" : "hoa hậu",
              "5 chia 3 bằng 2 khi nào?" : "sai", # ta làm sai 
-             "Ở Việt Nam, con rồng bay ở đâu và đáp ở đâu?" : "thăng long",
+             "Ở Việt Nam, con rồng bay ở đâu ?" : "thăng long",
              "Ở Việt Nam, con rồng đáp ở đâu?" : "hạ long",
              "Đố em cái gì khi xài thì quăng đi, không xài thì lấy lại?" : "neo",
              "Cái gì mà đi thì nằm, đứng cũng nằm, nhưng nằm lại đứng?" : "bàn chân",
