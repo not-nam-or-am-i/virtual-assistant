@@ -3,33 +3,33 @@ speech processing final project
 
 # List of tasks:
 
-Xin chào/ tạm biệt. (Quang Anh)
+-Xin chào/ tạm biệt.             			 (Quang Anh)
 
--Mở video trên youtube.			(Nam)
+-Mở máy ảnh 														(Quang Anh)
 
--Mở trình duyệt.		(Nam)
+-Mở video trên youtube.												(Nam)
 
--Chơi game câu đố. (hằng )
+-Mở trình duyệt.															(Nam)
 
--Tìm kiếm trên google và youtube 		(Nam)
+-Tìm kiếm trên google và youtube 							(Nam)
 
--Mở máy ảnh (Quang Anh)
+-Chơi game câu đố. 														(Hằng)
 
--Nghe tin tức news hôm nay, nguồn vnepress . (Hằng )
+-Nghe tin tức news hôm nay, nguồn vnepress .	(Hằng)
 
 List of questions:
 
--Trả lời cầu hỏi "là ai", "là gì"   (Nam)
-
--Thời tiết hôm nay thế nào ? (Quang Anh)
+-Thời tiết hôm nay thế nào ? 												(Quang Anh)
 
 -Nếu ngủ bây giờ thì tôi nên thức dậy vào mấy giờ ? (Quang Anh)
 
--Bây giờ là mấy giờ ? (Hằng)
+-Trả lời cầu hỏi "X là ai", "Y là gì"   										(Nam)
 
--Hôm nay thứ mấy, ngày / tháng/ năm (Hằng)
+-Bây giờ là mấy giờ ?																			  (Hằng)
 
--tôi đang ở đâu. (Hằng)
+-Hôm nay thứ mấy, ngày / tháng/ năm 												(Hằng)
+
+-Tôi đang ở đâu. 																						(Hằng)
 
 
 # Hướng dẫn sử dụng
@@ -60,7 +60,8 @@ List of questions:
 
 - "Vị trí hiện tại của tôi ? / Tôi đang ở đâu ? " : trả lời tỉnh/thành phố, quốc gia bạn đang ở.
 
-- "Chơi game cùng tôi / Chơi trò câu đố / Chơi game " : Trợ lý sẽ chơi game câu đố với bạn, bạn cần trả lời đúng keyword của đáp án là thành công, khi muốn thoát game , bạn nói "Thoát game / Đầu hàng / th
+- "Chơi game cùng tôi / Chơi trò câu đố / Chơi game " : Trợ lý sẽ chơi game câu đố với bạn, bạn cần trả lời đúng keyword của đáp án là thành công, khi muốn thoát game , bạn nói "Thoát game / Đầu hàng/ Thoát trò chơi ".
+
 
 - "kết thúc": tắt chương trình.
 
