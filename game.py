@@ -59,7 +59,7 @@ def play_hangman(ques: str):
         #open and read the file after the appending:
         if os.stat("game_history.txt").st_size == 0 :
             # print("nothing")
-            f = open("game_history.txt", "w")
+            f = open("game_history.txt", "w", encoding="utf-8")
             seed_num = datetime.datetime.now().time().microsecond % 100
             print("seed number: ", seed_num)
 
@@ -76,18 +76,18 @@ def play_hangman(ques: str):
             return "true", ans   
         else:      
             if "thoát trò chơi" in ques.strip().lower() or "đầu hàng" in ques.strip().lower() or "thoát game" in ques.strip().lower():
-                f = open("game_history.txt", "r+")
+                f = open("game_history.txt", "r+", encoding="utf-8")
                 f.truncate(0)
                 f.close()
                 return "true", "Bạn gà lắm hi hi "                
 
-            f = open("game_history.txt", "r")            
+            f = open("game_history.txt", "r", encoding="utf-8")            
             data = f.read()
             print(data)
             real_ans = game_list[data]
             if real_ans.lower() in ques.strip().lower():
 
-                f = open("game_history.txt", "r+")
+                f = open("game_history.txt", "r+", encoding="utf-8")
                 f.truncate(0)
                 f.close()
                 return "true", "Chính xác ! Chúc mừng bạn !"

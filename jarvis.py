@@ -167,7 +167,19 @@ def _play():
     tem1, _ = get_news(text)
     tem2, ans2 = play_hangman(text)
 
-    if tem2 != "false": # choi game
+    if 'tìm trên youtube' in text:
+        end_speech = search_youtube(text)
+        respond_to_user(end_speech)
+        
+    elif 'tìm' in text:
+        end_speech = search_google(text)
+        respond_to_user(end_speech)
+    #bật video trên youtube
+    elif 'bật' in text:
+        end_speech = play(text)
+        respond_to_user(end_speech)
+
+    elif tem2 != "false": # choi game
         respond_to_user(ans2)
     elif 'kết thúc' in text:
         goodbye()
@@ -194,19 +206,6 @@ def _play():
         for i in range(len(news_list)):
             ans = news_list[i]
             respond_to_user_asynchronous(ans)
-
-    elif 'tìm trên youtube' in text:
-        end_speech = search_youtube(text)
-        respond_to_user(end_speech)
-        
-    elif 'tìm' in text:
-        end_speech = search_google(text)
-        respond_to_user(end_speech)
-    #bật video trên youtube
-    elif 'bật' in text:
-        end_speech = play(text)
-        respond_to_user(end_speech)
-
         # break    
     elif 'xin chào' in text:
         hello()
