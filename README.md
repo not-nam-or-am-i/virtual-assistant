@@ -9,12 +9,13 @@ Xin chào/ tạm biệt. (Quang Anh)
 
 -Mở trình duyệt.		(Nam)
 
--game cau do. (hằng )
+-Chơi game câu đố. (hằng )
 
 -Tìm kiếm trên google và youtube 		(Nam)
 
 -Mở máy ảnh (Quang Anh)
 
+-Nghe tin tức news hôm nay, nguồn vnepress . (Hằng )
 
 List of questions:
 
@@ -24,13 +25,11 @@ List of questions:
 
 -Nếu ngủ bây giờ thì tôi nên thức dậy vào mấy giờ ? (Quang Anh)
 
--Bây giờ là mấy giờ ? Hằng
+-Bây giờ là mấy giờ ? (Hằng)
 
--nghe tin tuc news hom nay vnepress . Hang
+-Hôm nay thứ mấy, ngày / tháng/ năm (Hằng)
 
--Hôm nay thứ mấy, ngày / tháng/ năm Hằng
-
--tôi đang ở đâu. Hằng
+-tôi đang ở đâu. (Hằng)
 
 
 # hướng dẫn sử dụng
@@ -61,7 +60,7 @@ List of questions:
 
 - "Vị trí hiện tại của tôi ? / Tôi đang ở đâu ? " : trả lời tỉnh/thành phố, quốc gia bạn đang ở.
 
-- "Chơi game cùng tôi / Chơi trò câu đố " : Trợ lý sẽ chơi game câu đố với bạn, bạn cần trả lời đúng keyword của đáp án là thành công.
+- "Chơi game cùng tôi / Chơi trò câu đố / Chơi game " : Trợ lý sẽ chơi game câu đố với bạn, bạn cần trả lời đúng keyword của đáp án là thành công, khi muốn thoát game , bạn nói "Thoát game / Đầu hàng / th
 
-- "kết thúc": tắt chương trình
+- "kết thúc": tắt chương trình.
 
